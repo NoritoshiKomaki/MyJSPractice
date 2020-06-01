@@ -23,12 +23,11 @@
 
   <script>
     'use strict';
+    
+    const target = document.getElementById('target');
 
-    document.getElementById('target').addEventListener('click', () => {
-      const target = document.getElementById('target');
-      // target.style.background = 'pink';
-      // target.style.borderRadius = '50%';
-      target.classList.add('circle');
+    target.addEventListener('click', () => {
+      target.classList.toggle('circle');
     });
   </script>
 </body>
