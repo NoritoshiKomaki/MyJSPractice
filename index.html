@@ -9,6 +9,12 @@
       height: 100px;
       background: skyblue;
       cursor: pointer;
+      transition: 0.8s;
+    }
+    .circle {
+      background: pink;
+      border-radius: 50%;
+      transform: rotate(360deg);
     }
   </style>
 </head>
@@ -20,8 +26,9 @@
 
     document.getElementById('target').addEventListener('click', () => {
       const target = document.getElementById('target');
-      target.style.background = 'pink';
-      target.style.borderRadius = '50%';
+      // target.style.background = 'pink';
+      // target.style.borderRadius = '50%';
+      target.classList.add('circle');
     });
   </script>
 </body>
