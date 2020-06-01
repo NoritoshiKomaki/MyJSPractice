@@ -19,7 +19,9 @@
     'use strict';
 
     document.getElementById('target').addEventListener('click', () => {
-      document.getElementById('target').style.background = 'pink';
+      const target = document.getElementById('target');
+      target.style.background = 'pink';
+      target.style.borderRadius = '50%';
     });
   </script>
 </body>
