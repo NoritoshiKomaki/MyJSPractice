@@ -1,12 +1,11 @@
 'use strict';
 
 {
-  // 0, 1, 2
-  // Math.floor(Math.random() * 3)
-  // 0, ..., n
-  // Math.floor(Math.random() * (n + 1))
-  // min, ..., max
-  // Math.floor(Math.random() * (max + 1 - min)) + min
+  const d = new Date(2019, 10);
+  d.setHours(10, 20, 30)
+  d.setDate(31);
+  d.setDate(d.getDate() + 3);
+  console.log(d);
 
-  console.log(Math.floor(Math.random() * 6) + 1);
+  // console.log(`${d.getMonth() + 1} 月 ${d.getDate()} 日`)
 }
