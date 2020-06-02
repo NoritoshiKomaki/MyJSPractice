@@ -1,21 +1,21 @@
 'use strict';
 
 {
-  // const str = 'hello';
+  const scores = [10, 3, 9];
 
-  // console.log(str.length);
+  let sum = 0;
 
-  // console.log(str.substring(2, 4))
+  scores.forEach(score => {
+    sum += score;
+  });
 
-  const d = [2019, 11, 14]
+  const avg = sum / scores.length;
 
-  console.log(d.join('/'));
-  console.log(d.join(''));
+  // console.log(sum);
+  console.log(Math.floor(avg)); // 小数点切り捨て
+  console.log(Math.ceil(avg)); // 小数点切り上げ
+  console.log(Math.round(avg)); // 小数点四捨五入
+  console.log(avg.toFixed(3)); // 小数点の桁を指定
 
-  const t = '17:08:24';
-  console.log(t.split(':'));
-  const [hour, minute, second] = t.split(':');
-  console.log(hour)
-  console.log(minute)
-  console.log(second)
+  console.log(Math.random()); // 0〜1の間のrandomな数値を返す
 }
