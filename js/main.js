@@ -3,11 +3,19 @@
 {
   const scores = [80, 90, 40, 70];
 
-  // console.log(`Score: ${scores[0]}`)
-  // console.log(`Score: ${scores[1]}`)
-  // console.log(`Score: ${scores[2]}`)
+  // const [a, b, c, d] = scores;
+  // console.log(a)
+  // console.log(b)
+  // console.log(c)
+  // console.log(d)
 
-  for (let i = 0; i < scores.length; i++) {
-    console.log(`Score ${i}: ${scores[i]}`);
-  }
+  const [a, b, ...others] = scores
+  console.log(a);
+  console.log(b);
+  console.log(others);
+
+  let x = 30;
+  let y = 70;
+  [x, y] = [y, x];
+  console.log(x, y)
 }
