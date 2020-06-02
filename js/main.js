@@ -1,8 +1,17 @@
 'use strict';
 
 {
-  const numbers = [1, 4, 7, 8, 10];
+  const point = {
+    x: 100,
+    y: 180,
+  };
 
-  const evenNumbers = numbers.filter(number => number % 2 === 0);
-  console.log(evenNumbers)
+  point.x = 120;
+
+  // console.log(point.x);
+  // console.log(point['y']);
+
+  point.z = 90;
+  delete point.y;
+  console.log(point);
 }
