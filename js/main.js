@@ -1,11 +1,27 @@
 'use strict';
 
 {
-  const d = new Date(2019, 10);
-  d.setHours(10, 20, 30)
-  d.setDate(31);
-  d.setDate(d.getDate() + 3);
-  console.log(d);
+  // let i = 0;
+  // function showTime() {
+  //   console.log(new Date());
+  //   i++;
+  //   if (i > 2) {
+  //     clearInterval(intervalId);
+  //   }
+  // }
 
-  // console.log(`${d.getMonth() + 1} 月 ${d.getDate()} 日`)
+  // const intervalId = setInterval(showTime, 1000);
+
+  let i = 0;
+  function showTime() {
+    console.log(new Date());
+    const timeoutId = setTimeout(showTime, 1000);
+    i++;
+    if (i > 2) {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  showTime();
+
 }
