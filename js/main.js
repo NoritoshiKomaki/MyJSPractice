@@ -1,18 +1,21 @@
 'use strict';
 
 {
-  document.querySelector('button').addEventListener('click', () => {
-    const colors = document.querySelectorAll('input');
-    const selectedColors = [];
+  const text = document.querySelector('textarea');
 
-    colors.forEach(color => {
-      if (color.checked === true) {
-        selectedColors.push(color.value)
-      }
-    });
+  text.addEventListener('focus', () => {
+    console.log('focus')
+  });
 
-    const li = document.createElement('li');
-    li.textContent = selectedColors;
-    document.querySelector('ul').appendChild(li);
+  text.addEventListener('blur', () => {
+    console.log('blur')
+  });
+
+  text.addEventListener('input', () => {
+    console.log(text.value.length)
+  });
+
+  text.addEventListener('change', () => {
+    console.log('change')
   });
 }
