@@ -1,28 +1,40 @@
 body {
-  background: #efefef;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  background: #eee;
 }
 
-#btn {
-  width: 200px;
-  height: 200px;
-  background: #ef454a;
-  border-radius: 50%;
-  margin: 30px auto;
+.container {
+  margin: 20px auto;
+  width: 270px;
+  background: white;
+  padding: 15px;
   text-align: center;
-  line-height: 200px;
-  color: white;
+}
+
+#timer {
+  background: #ddd;
+  height: 120px;
+  line-height: 120px;
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.btn {
+  width: 80px;
+  height: 45px;
+  line-height: 45px;
+  background: #ddd;
   font-weight: bold;
-  font-size: 42px;
   cursor: pointer;
-  box-shadow: 0 10px 0 #d1483e;
   user-select: none;
 }
 
-#btn:hover {
-  opacity: 0.9;
+.controls {
+  display: flex;
+  justify-content: space-between;
 }
 
-#btn:active {
-  box-shadow: 0 5px 0 #d1483e;
-  margin-top: 35px;
+.inactive {
+  opacity: 0.6;
 }
