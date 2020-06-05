@@ -2,18 +2,16 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>Stopwatch</title>
+  <title>Typing Game</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="container">
-    <div id="timer">00:00.000</div>
-    <div class="controls">
-      <div class="btn" id="start">Start</div>
-      <div class="btn" id="stop">Stop</div>
-      <div class="btn" id="reset">Reset</div>
-    </div>
-    <script src="js/main.js"></script>
-  </div>
+  <p id="target">Click to start</p>
+  <p class="info">
+    Letter count: <span id="score">0</span>
+    Miss count: <span id="miss">0</span>
+    Time left: <span id="timer">0.00</span>
+  </p>
+  <script src="js/main.js"></script>
 </body>
 </html>

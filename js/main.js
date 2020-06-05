@@ -1,104 +1,134 @@
 'use strict';
 
 {
-  // 定数timerにid="timer"の要素を代入
-  const timer = document.getElementById('timer');
-  // 定数startにid="start"の要素を代入
-  const start = document.getElementById('start');
-  // 定数stopにid="stop"の要素を代入
-  const stop = document.getElementById('stop');
-  // 定数resetにid="reset"の要素を代入
-  const reset = document.getElementById('reset');
-
+  // 定数wordsに複数の単語を配列で代入
+  const words = [
+    'apple',
+    'sky',
+    'blue',
+    'middle',
+    'set',
+  ]
+  // 変数wordにwordsをランダムで代入
+  let word;
+  // 変数locに0を代入
+  let loc;
+  // 変数scoreに0を代入
+  let score;
+  // 変数missに0を代入
+  let miss;
+  // 定数timeLimitに3*1000ミリ秒を代入
+  const timeLimit = 3 * 1000;
   // 変数startTimeを定義
   let startTime;
-  // setTimeoutを止めるための変数timeoutIdを定義
-  let timeoutId;
-  // 経過時間を保持するためのelapsedTimeを定義し、0を代入
-  let elapsedTime = 0;
+  // 変数isPlayingを定義しfalseを代入
+  let isPlaying = false;
 
-  function countUp() {
-    // 定数dに現在時刻からstartをクリックした時刻を引いた時刻を代入(クリックしてからの秒数)
-    const d = new Date(Date.now() - startTime + elapsedTime);
-    // 定数dから分を取得し、mに代入 Stringで文字列化している
-    // padStart(表示したい桁数, '桁の中身が空の時に表示する文字列')
-    const m = String(d.getMinutes()).padStart(2, '0');
-    // 定数dから秒を取得し、sに代入
-    const s = String(d.getSeconds()).padStart(2, '0');
-    // 定数dからミリ秒を取得し、msに代入
-    const ms = String(d.getMilliseconds()).padStart(3, '0');
-    // 定数timerのテキストにm, s, msを表示
-    timer.textContent = `${m}:${s}.${ms}`;
+  // 定数targetにid="target"の要素を代入
+  const target = document.getElementById('target');
+  // 定数scoreLabelにid="score"の要素を代入
+  const scoreLabel = document.getElementById('score');
+  // 定数missLabelにid="miss"の要素を代入
+  const missLabel = document.getElementById('miss');
+  // 定数timerLabelにid="timer"の要素を代入
+  const timerLabel = document.getElementById('timer');
+  
 
-    // 10ミリ秒毎に関数countUpを繰り返す
-    timeoutId = setTimeout(() => {
-      countUp();
+  function updateTarget() {
+    // 変数placeholderに空文字を代入
+    let placeholder = '';
+    // locが増える毎にplaceholderに_を足していく
+    for (let i = 0; i < loc; i++) {
+      placeholder += '_';
+    }
+    // targetのテキストにplaceholderとまだ入力していないwordを代入
+    target.textContent = placeholder + word.substring(loc);
+  }
+
+  function updateTimer() {
+    // 定数timeLeftを定義し変数startTimeと定数timeLimitを足した数値から現在時刻を引く
+    const timeLeft = startTime + timeLimit - Date.now();
+    // timerLabelのテキストにtimeLeft / 1000の小数2桁までを表示
+    timerLabel.textContent = (timeLeft / 1000).toFixed(2);
+
+    // 10ミリ秒毎にupdateTimer繰り返す
+    const timeoutId = setTimeout(() => {
+      updateTimer();
     }, 10);
+
+    timeLeftが0を切ったら
+    if (timeLeft < 0) {
+      isPlaying = false;
+      // updateTimerの繰り返し終了
+      clearTimeout(timeoutId);
+      // timerLabelを0.00に書き換え（誤差修正のため）
+      timerLabel.textContent = '0.00';
+      // showResultを100ms後に実行（誤差修正のため）
+      setTimeout(() => {
+        showResult();
+      }, 100);
+      // targetのテキストを以下に変更
+      target.textContent = 'click to replay';
+    }
   }
 
-  // スタート前のinactiveclassを設定
-  function setButtonStateInitial() {
-    start.classList.remove('inactive');
-    stop.classList.add('inactive');
-    reset.classList.add('inactive');
+  function showResult() {
+    // 定数accuracyに正解率の式を代入
+    const accuracy = score + miss === 0 ? 0 : score / (score + miss) * 100;
+    // アラートでscore, miss, accuracyを表示
+    alert(`${score} letters, ${miss} misses, ${accuracy.toFixed(2)}% accuracy!`);
   }
 
-  // スタート後のinactiveclassを設定
-  function setButtonStateRunning() {
-    start.classList.add('inactive');
-    stop.classList.remove('inactive');
-    reset.classList.add('inactive');
-  }
-
-  // ストップ時のinactiveclassを設定
-  function setButtonStateStopped() {
-    start.classList.remove('inactive');
-    stop.classList.add('inactive');
-    reset.classList.remove('inactive');
-  }
-
-  // 関数setButtonStateInitialを実行
-  setButtonStateInitial()
-
-  // 定数startをクリックするとイベント発火
-  start.addEventListener('click', () => {
-    // 定数startの要素がinactiveclassを持っていたらreturnを返す
-    if (start.classList.contains('inactive') === true) {
+  // 画面をクリックするとイベント発火
+  window.addEventListener('click', () => {
+    // isPlayingがtrueだったらreturnを返す
+    if (isPlaying === true) {
       return;
     }
-    // 関数setButtonStateRunningを実行
-    setButtonStateRunning()
-    // 現在時刻をstartTimeに代入
+    // isPlayingをtrueに切り替え
+    isPlaying = true;
+    // スタート時に画面をクリックするとtargetのテキストがwordに切り替わる
+
+    loc = 0;
+    score = 0;
+    miss = 0;
+    scoreLabel.textContent = score;
+    missLabel.textContent = miss;
+    word = words[Math.floor(Math.random() * words.length)];
+
+    target.textContent = word;
     startTime = Date.now();
-    // 関数countUpを実行
-    countUp();
-  });
+    updateTimer();
+  })
 
-  // 定数stopをクリックするとイベント発火
-  stop.addEventListener('click', () => {
-    // 定数stopの要素がinactiveclassを持っていたらreturnを返す
-    if (stop.classList.contains('inactive') === true) {
+  // キーボードを押すとイベントが発火
+  window.addEventListener('keydown', e => {
+    if (isPlaying !== true) {
       return;
     }
-    // 関数setButtonStateStoppedを実行
-    setButtonStateStopped()
-    // 変数timeoutIdを用いてsetTimeoutを停止
-    clearTimeout(timeoutId);
-    // 変数elapsedTimeに現在時刻からstartTimeを引いた時刻を代入
-    elapsedTime += Date.now() - startTime;
-  });
-
-  // 定数resetをクリックするとイベント発火
-  reset.addEventListener('click', () => {
-    // 定数resetの要素がinactiveclassを持っていたらreturnを返す
-    if (reset.classList.contains('inactive') === true) {
-      return;
+    // 押したキーと定数wordの文字が一致するとscoreを表示
+    if (e.key === word[loc]) {
+      console.log('score');
+      // 変数locを+1して次の文字に移動する
+      loc++
+      // locがword.lengthと同じ数になったらwordを次の文字に置き換え+locを初期化する
+      if (loc === word.length) {
+        word = words[Math.floor(Math.random() * words.length)];
+        loc = 0;
+      }
+      // 関数updateTargetを実行
+      updateTarget();
+      // scoreに1足していく
+      score++;
+      // scoreLabelのテキストにscoreを代入
+      scoreLabel.textContent = score;
+      // それ外はmissを表示
+    } else {
+      console.log('miss')
+      // missを足していく
+      miss++;
+      // missLabelのテキストにmissを代入
+      missLabel.textContent = miss;
     }
-    // 関数setButtonStateInitialを実行
-    setButtonStateInitial()
-    // 定数timerのテキストを以下に設定する
-    timer.textContent = '00:00.000';
-    // 変数elapsedTimeを初期化する
-    elapsedTime = 0;
   });
 }
